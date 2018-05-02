@@ -27,7 +27,7 @@
 
 ## Local Reference
 
-`object` 相關類型會有產生 local ref，目前遇到的上限為 `512`，超過便會發生 `JNI ERROR`。
+`object` 相關類型會有產生 local ref，目前遇到的上限為 `512`，超過便會發生 `JNI ERROR`。
 
 > 需要在適當時機處理掉 `env->DeleteLocalRef(ref)`
 
@@ -61,9 +61,10 @@ struct _jmethodID;                      /* opaque structure */
 typedef struct _jmethodID* jmethodID;   /* method IDs */
 ```
 
+
 ## Global Reference
 
-一樣要在適當時機釋放 ref，使用時機多為需要長期/多次使用，
+一樣要在適當時機釋放 ref，使用時機多為需要長期/多次使用，
 
 ``` c
 newRef = env->NewGlobalRef(ref);
@@ -72,7 +73,7 @@ env->DeleteGlobalRef(newRef);
 
 所以在使用上需要特别注意:
 
-## 其他注意事項
+## 其他注意事項
  * 和反射一样，查找类、获取方法、获取属性都是有消耗的，在频繁调用的jni方法中，应该通过GlobalRef预先保留相关对象。
  * 对于stirng类，如果和原生c字符串进行转换操作的时候，需要注意释放内存。
  * 虽然C++本身也有异常处理，但是切记空指针异常不同于java，需要注意可能为NULL的代码。
